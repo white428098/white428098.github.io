@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  width: 100%;
+  color-scheme: light dark;
+  color: var(--white);
+  background-color: var(--black);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --primary: #5d80b5;
+  --secondary: #d25e5e;
+  --white: #fdfdff;
+  --black: #333333;
+}
+#root {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  font-weight: 500;
+  color: var(--primary);
+  text-decoration: inherit;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border: 1px solid var(--white);
+  padding: 0.2em 1em;
+  font-size: 1em;
+  font-weight: 400;
+  font-family: inherit;
+  background-color: var(--black);
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: var(--primary);
+}
+button:focus,
+button:focus-visible {
+  background-color: var(--primary);
+  color: var(--white);
+}
+input {
+  padding: 0.4em 0.6em;
+  border: 1px solid var(--white);
+  background-color: var(--black);
+}
+input:focus,
+input:focus-visible {
+  outline: var(--primary) solid 1.5px;
+  border: 1px solid transparent;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    color: var(--black);
+    background-color: var(--white);
+    --primary: #335b97;
+    --secondary: #c24841;
+  }
+  a:hover {
+    color: var(--primary);
+  }
+  button {
+    background-color: var(--white);
+    border-color: var(--black);
+  }
+  input {
+    background-color: var(--white);
+    border-color: var(--black);
+  }
+}
