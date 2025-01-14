@@ -4,7 +4,7 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 /*------------------------------ Main ------------------------------ */
-import HomePage from "./pages/HomePage/HomePage";
+import TestPage from "./pages/TestPage/TestPage";
 import AppLayout from "./components/AppLayout/AppLayout";
 import AppLoginLayout from "./components/AppLoginLayout/AppLoginLayout";
 import AccountLogin from "./pages/AccountLogin/AccountLogin";
@@ -29,14 +29,14 @@ function App() {
       children: [
         {
           index: true,
-          element: <HomePage />,
+          element: <TestPage />,
         },
         ...routes,
       ],
     },
     {
       path: "*",
-      element: <Navigate to="/" />,
+      element: <Navigate to="/hello_world" />,
     },
   ];
   const router = createBrowserRouter(routesForRouter);
