@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button/Button";
 // import { useAuthenticationState } from "../../contexts/AuthenticationContext";
 function HomePage() {
   // const { isLogin, handleSetLogout } = useAuthenticationState();
@@ -15,6 +16,7 @@ function HomePage() {
       {/* ) : (
         <button onClick={() => navigate("/login")}>LOGIN</button>
       )} */}
+      <Button>Welcome</Button>
       <button onClick={() => navigate("/hello_world")}>TEST</button>
     </div>
   );
