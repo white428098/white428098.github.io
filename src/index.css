@@ -95,3 +95,22 @@ input:focus-visible {
     border-color: var(--black);
   } */
 }
+.wheel {
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(
+    #ffc757 0% 91.6667%,      /* 買 */
+    #66a1ff 91.6667% 100%     /* 不買 */
+  );
+  position: relative;
+  transform: rotate(0deg);
+  transition: transform 3s cubic-bezier(0.33, 1, 0.68, 1); /* 緩和旋轉 */
+}
+.pointer {
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 32px solid coral ;
+  /* mix-blend-mode: difference; */
+}

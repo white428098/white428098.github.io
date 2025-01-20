@@ -2,6 +2,8 @@
 import { createContext, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import TestPage from "../pages/TestPage/TestPage";
+import HomePage from "../pages/HomePage/HomePage"
+import BuyorNot from "../pages/BuyorNot/BuyorNot";
 const RouteContext = createContext();
 function RouteContextProvider({ children }) {
   const routes = Routes();
@@ -26,7 +28,12 @@ function Routes() {
     children: [
       {
         index: true,
-        element: <TestPage />,
+        element: <BuyorNot />,
+      },
+      {
+        name: "chess",
+        path: "cm",
+        element: <HomePage />,
       },
     ],
   };

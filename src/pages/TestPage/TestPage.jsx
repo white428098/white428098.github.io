@@ -6,7 +6,7 @@ export default function TestPage() {
   const [imgLink, setImgLink] = useState(
     "https://imgcdn.sigstick.com/bhg06lozfx80d3ecvU8U/0-1.png"
   );
-  const newYearDate = new Date("2025-01-25T00:00:00");
+  const newYearDate = new Date("2025-01-24T18:00:00");
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -40,9 +40,12 @@ export default function TestPage() {
     "https://media.tenor.com/cNVsPQJv27oAAAAM/pay-attention-to-me-want-attention.gif",
     "https://memeprod.ap-south-1.linodeobjects.com/user-maker-thumbnail/68ff812a8afc22c37ca2e25f8ac03dfa.gif",
     "https://memeprod.ap-south-1.linodeobjects.com/user-maker-thumbnail/430401c14ec36fd53444ee6221ff1331.gif",
-    "https://media.tenor.com/9Fi8d9L09UMAAAAM/exciting-usagi.gif",
-    "https://imgcdn.sigstick.com/glASQVa46gimK5akKwKV/4-1.thumb128.png",
-    "https://imgcdn.sigstick.com/glASQVa46gimK5akKwKV/18-1.thumb128.png",
+    "https://imgcdn.sigstick.com/glASQVa46gimK5akKwKV/0-1.png",
+    "https://i.pinimg.com/originals/12/2f/ed/122fedc191bf0d05ff487e9fc5291b5d.gif",
+    "https://i.pinimg.com/originals/70/01/48/700148f33a9c05d36a2a1016a9de6d12.gif",
+    "https://imgcdn.sigstick.com/OsvntKDPeCaaQvj9xBE2/2-1.png",
+    "https://media3.giphy.com/media/CkTRTXDIFhix8Vp5Oz/giphy.gif?cid=6c09b952d9j0mf4q2h83j6lg6oea6ci2hov43sixsguy5537&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=g",
+    "https://imgcdn.sigstick.com/0rRklpPB08WlJkSmIpUs/6-1.png",
   ];
   function handleChangeImg() {
     const getimg = Math.floor(Math.random() * imgList.length);
@@ -51,14 +54,14 @@ export default function TestPage() {
 
   return (
     <div
-      className="flex flex-col items-center justify-center w-full min-h-screen px-10 select-none bg-stone-50"
+      className="flex flex-col items-center justify-center w-full min-h-screen px-10 select-none bg-stone-50 group text-stone-900"
       // onClick={() => setNum(num + 1)}
       onClick={() => handleChangeImg()}
     >
       <h1 className="text-3xl sm:text-5xl mb-10">新年假期倒數</h1>
       <img
         src={imgLink}
-        className="size-60 rounded-full object-cover shadow-lg "
+        className="size-60 rounded-full object-cover shadow-stone-400  shadow-lg group-active:shadow-inner"
       />
       {timeLeft ? (
         <div className="text-sm sm:text-2xl gap-3 md:gap-6 w-full md:w-2/3 lg:w-1/2 items-center justify-center grid grid-cols-4 place-items-center my-10">
@@ -78,7 +81,7 @@ export default function TestPage() {
           </div>
         </div>
       ) : (
-        <p className="text-3xl">放假快樂！🎉</p>
+        <p className="text-3xl">出去玩！</p>
       )}
       <footer className="mt-12 text-lg absolute bottom-0 py-3">
         © {new Date().getFullYear()} 準備放假
