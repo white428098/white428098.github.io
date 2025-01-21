@@ -4,7 +4,7 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 /*------------------------------ Main ------------------------------ */
-import TestPage from "./pages/TestPage/TestPage";
+import HomePage from "./pages/HomePage/HomePage";
 import AppLayout from "./components/AppLayout/AppLayout";
 import AppLoginLayout from "./components/AppLoginLayout/AppLoginLayout";
 import AccountLogin from "./pages/AccountLogin/AccountLogin";
@@ -29,7 +29,7 @@ function App() {
       children: [
         {
           index: true,
-          element: <TestPage />,
+          element: <HomePage />,
         },
         ...routes,
       ],

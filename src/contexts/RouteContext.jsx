@@ -2,7 +2,7 @@
 import { createContext, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import TestPage from "../pages/TestPage/TestPage";
-import HomePage from "../pages/HomePage/HomePage"
+import Chess from "../pages/Chess/Chess"
 import BuyorNot from "../pages/BuyorNot/BuyorNot";
 const RouteContext = createContext();
 function RouteContextProvider({ children }) {
@@ -20,6 +20,18 @@ function useRouteContext() {
 }
 export { useRouteContext, RouteContextProvider };
 function Routes() {
+  const Buy = {
+    name: "buy",
+    image: "",
+    path: "buy",
+    element: <Outlet />,
+    children: [
+      {
+        index: true,
+        element: <BuyorNot />,
+      },
+    ],
+  };
   const test = {
     name: "test",
     image: "",
@@ -28,16 +40,23 @@ function Routes() {
     children: [
       {
         index: true,
-        element: <BuyorNot />,
-      },
-      {
-        name: "chess",
-        path: "cm",
-        element: <HomePage />,
+        element: <TestPage />,
       },
     ],
   };
-  const routes = [test];
+  const ChessPage = {
+    name: "Chess",
+    image: "",
+    path: "chess",
+    element: <Outlet />,
+    children: [
+      {
+        index: true,
+        element: <Chess />,
+      },
+    ],
+  };
+  const routes = [test, ChessPage, Buy];
   return routes;
 }
 //  {
