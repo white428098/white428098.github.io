@@ -10,14 +10,15 @@ const Wheel = () => {
   // 隨機計算結果
   const calculateResult = (angle) => (angle % 360 < probabilityThreshold ? "買!!!" : "不買!");
 
-  const handleSpin = () => {
+  const handleSpin = (type) => {
     setResult("")
     if (isSpinning) return; // 防止重複點擊
 
     const randomAngle = Math.random() * 360; // 隨機角度
-    const totalAngle = currentAngle + 360 * 4 + randomAngle; // 累積旋轉角度
+    const totalAngle = currentAngle + 360 * type + randomAngle; // 累積旋轉角度
     const result = calculateResult(totalAngle); // 判斷結果
 
+    console.log(currentAngle)
     // 設定動畫狀態
     setIsSpinning(true);
     setCurrentAngle(totalAngle);
@@ -27,7 +28,13 @@ const Wheel = () => {
       setResult(result); // 顯示結果 (也可改為其他顯示方式)
       setIsSpinning(false);
     }, animationDuration);
-  };
+    if (currentAngle > 10000) {
+      setTimeout(() => {
+        setCurrentAngle(0);
+      }, 10000);
+     
+    }
+    };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gray-100 overflow-hidden">
@@ -59,14 +66,32 @@ const Wheel = () => {
       <div className="mt-10 text-lg h-8">{result}</div>
 
       {/* 按鈕 */}
+      <div className="flex gap-4">
       <button
-        onClick={handleSpin}
+          onClick={() => handleSpin(2)}
         disabled={isSpinning}
-        className={`mt-10 px-6 py-3 w-28 h-28 text-white font-semibold rounded-full shadow-lg active:shadow-none ${isSpinning ? "bg-gray-400 cursor-not-allowed" : "bg-amber-500 active:bg-amber-600"
+        className={`mt-10 w-20 h-20 text-white font-semibold rounded-full shadow-lg active:shadow-none ${isSpinning ? "bg-gray-400 cursor-not-allowed" : "bg-amber-500 active:bg-amber-600"
+          }`}
+      >
+        {isSpinning ? "旋轉中..." : "輕輕轉"}
+      </button>
+      <button
+          onClick={() => handleSpin(4)}
+        disabled={isSpinning}
+        className={`mt-10 w-20 h-20 text-white font-semibold rounded-full shadow-lg active:shadow-none ${isSpinning ? "bg-gray-400 cursor-not-allowed" : "bg-amber-500 active:bg-amber-600"
           }`}
       >
         {isSpinning ? "旋轉中..." : "轉!!!"}
       </button>
+      <button
+        onClick={()=>handleSpin(6)}
+        disabled={isSpinning}
+        className={`mt-10 w-20 h-20 text-white font-semibold rounded-full shadow-lg active:shadow-none ${isSpinning ? "bg-gray-400 cursor-not-allowed" : "bg-amber-500 active:bg-amber-600"
+          }`}
+      >
+        {isSpinning ? "旋轉中..." : "用力轉"}
+        </button>
+        </div>
     </div>
   );
 };
