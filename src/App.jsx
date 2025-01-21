@@ -5,6 +5,10 @@ import {
 } from "react-router-dom";
 /*------------------------------ Main ------------------------------ */
 import HomePage from "./pages/HomePage/HomePage";
+import TestPage from "./pages/TestPage/TestPage";
+import Chess from "./pages/Chess/Chess";
+import BuyorNot from "./pages/BuyorNot/BuyorNot";
+/*------------------------------ Main ------------------------------ */
 import AppLayout from "./components/AppLayout/AppLayout";
 import AppLoginLayout from "./components/AppLoginLayout/AppLoginLayout";
 import AccountLogin from "./pages/AccountLogin/AccountLogin";
@@ -31,12 +35,27 @@ function App() {
           index: true,
           element: <HomePage />,
         },
-        ...routes,
+        {
+          name: "倒數",
+          path: "test",
+          element: <TestPage />,
+        },
+        {
+          name: "西洋棋",
+          path: "Chess",
+          element: <Chess />,
+        },
+        {
+          name: "買!!!",
+          path: "BuyorNot",
+          element: <BuyorNot />,
+        },
+        // ...routes,
       ],
     },
     {
       path: "*",
-      element: <Navigate to="/hello_world" />,
+      element: <Navigate to="/" />,
     },
   ];
   const router = createBrowserRouter(routesForRouter);

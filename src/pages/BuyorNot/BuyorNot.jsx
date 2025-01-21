@@ -50,6 +50,9 @@ const Wheel = () => {
             transition: isSpinning ? `transform ${animationDuration / 1000}s cubic-bezier(0.33, 1, 0.68, 1)` : "none",
           }}
         >
+         
+           
+          
           {/* 買 */}
           <div className="absolute -top-40 -left-10 inset-0 flex items-center justify-center -rotate-12">
             <div className="text-xl font-bold text-stone-100">買</div>
@@ -58,6 +61,11 @@ const Wheel = () => {
           <div className="absolute top-40 left-10 inset-0 flex items-center justify-center rotate-[168deg]">
             <div className="text-xl font-bold text-stone-700">不買</div>
           </div>
+        </div>
+        {/* img */}
+        <div className="absolute z-50 inset-0 flex items-center justify-center">
+          <img className="size-32 drop-shadow-lg" src={"https://imgcdn.sigstick.com/BQ4WIe4IN6lUeMHfyA8T/29-1.thumb128.png"} />
+          {/* https://imgcdn.sigstick.com/BQ4WIe4IN6lUeMHfyA8T/7-1.thumb128.png */}
         </div>
 
         {/* 轉盤背景 */}

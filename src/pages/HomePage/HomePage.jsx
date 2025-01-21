@@ -6,7 +6,7 @@ export default function HomePage() {
     {
       text:"買不買",
       img:"",
-      link:"/buy",
+      link:"/BuyorNot",
     },
     {
       text:"西陽春棋",
@@ -16,7 +16,7 @@ export default function HomePage() {
     {
       text:"倒數器",
       img:"",
-      link:"/hello_world",
+      link:"/test",
     }
   ]
   return (
