@@ -1,32 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+
 export default function TestPage() {
   const [timeLeft, setTimeLeft] = useState({});
-  const [num, setNum] = useState(1);
+  const [status, setStatus] = useState(""); // 「等待下班」「放風」「準備上班」
   const [imgLink, setImgLink] = useState(
     "https://imgcdn.sigstick.com/bhg06lozfx80d3ecvU8U/0-1.png"
   );
-  const newYearDate = new Date("2025-01-24T18:00:00");
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date();
-      const difference = newYearDate - now;
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / (1000 * 60)) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        });
-      } else {
-        setTimeLeft(null);
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [newYearDate]);
   const imgList = [
     "https://imgcdn.sigstick.com/bhg06lozfx80d3ecvU8U/0-1.png",
     "https://media0.giphy.com/media/f6v1HAqfj2svgGAqh9/giphy.gif?cid=6c09b952fivwww6yyfr060tstmq4necqsvqgbawdkkcxebq1&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=g",
@@ -47,44 +27,123 @@ export default function TestPage() {
     "https://media3.giphy.com/media/CkTRTXDIFhix8Vp5Oz/giphy.gif?cid=6c09b952d9j0mf4q2h83j6lg6oea6ci2hov43sixsguy5537&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=g",
     "https://imgcdn.sigstick.com/0rRklpPB08WlJkSmIpUs/6-1.png",
   ];
+
   function handleChangeImg() {
     const getimg = Math.floor(Math.random() * imgList.length);
     setImgLink(imgList.at(getimg));
   }
 
+  // 根據當前時間與星期來決定倒數目標與狀態
+  function getCountdownInfo() {
+    const now = new Date();
+    const day = now.getDay(); // 0: 週日, 6: 週六
+    const today = new Date(now);
+    today.setHours(0, 0, 0, 0);
+
+    const today9 = new Date(today);
+    today9.setHours(9, 0, 0, 0);
+    const today18 = new Date(today);
+    today18.setHours(18, 0, 0, 0);
+    const today21 = new Date(today);
+    today21.setHours(21, 0, 0, 0);
+
+    // 週六整天
+    if (day === 6) {
+      return { state: "放風", target: null };
+    }
+    // 週日
+    else if (day === 0) {
+      const noon = new Date(today);
+      noon.setHours(12, 0, 0, 0);
+      if (now < noon) {
+        return { state: "放風", target: null };
+      } else {
+        // 從週日中午開始倒數到隔天（週一）9:00
+        const target = new Date(today);
+        target.setDate(target.getDate() + 1);
+        target.setHours(9, 0, 0, 0);
+        return { state: "準備上班", target };
+      }
+    }
+    // 週一到週五
+    else {
+      if (now < today9) {
+        return { state: "準備上班", target: today9 };
+      } else if (now >= today9 && now < today18) {
+        return { state: "等待下班", target: today18 };
+      } else if (now >= today18 && now < today21) {
+        return { state: "放風", target: null };
+      } else {
+        // 現在在 21:00 之後，檢查隔天是否為週六
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowDay = tomorrow.getDay();
+        if (tomorrowDay === 6) {
+          // 隔天為週六，直接進入放風狀態
+          return { state: "放風", target: null };
+        } else {
+          tomorrow.setHours(9, 0, 0, 0);
+          return { state: "準備上班", target: tomorrow };
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date();
+      const { state, target } = getCountdownInfo();
+      setStatus(state);
+      if (target) {
+        const diff = target - now;
+        if (diff <= 0) {
+          setTimeLeft(null);
+        } else {
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const minutes = Math.floor((diff / (1000 * 60)) % 60);
+          const seconds = Math.floor((diff / 1000) % 60);
+          setTimeLeft({ days, hours, minutes, seconds });
+        }
+      } else {
+        setTimeLeft(null);
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div
       className="flex flex-col items-center justify-center w-full min-h-screen px-10 select-none bg-stone-50 group text-stone-900"
-      // onClick={() => setNum(num + 1)}
-      onClick={() => handleChangeImg()}
+      onClick={handleChangeImg}
     >
-      <h1 className="text-3xl sm:text-5xl mb-10">新年假期倒數</h1>
+      {/* 標題根據狀態切換 */}
+      <div className="text-3xl sm:text-5xl mb-10">{status}</div>
       <img
         src={imgLink}
-        className="size-60 rounded-full object-cover shadow-stone-400  shadow-lg group-active:shadow-inner"
+        alt="隨機圖片"
+        className="size-60 rounded-full object-cover shadow-stone-400 shadow-lg group-active:shadow-inner"
       />
       {timeLeft ? (
         <div className="text-sm sm:text-2xl gap-3 md:gap-6 w-full md:w-2/3 lg:w-1/2 items-center justify-center grid grid-cols-4 place-items-center my-10">
           <div>
-            <span className="text-3xl sm:text-5xl">{timeLeft.days} </span> 天
+            <span className="text-3xl sm:text-5xl">{timeLeft.days} </span>天
           </div>
           <div>
-            <span className="text-3xl sm:text-5xl">{timeLeft.hours} </span>
-            小時
+            <span className="text-3xl sm:text-5xl">{timeLeft.hours} </span>小時
           </div>
           <div>
-            <span className="text-3xl sm:text-5xl">{timeLeft.minutes} </span>
-            分鐘
+            <span className="text-3xl sm:text-5xl">{timeLeft.minutes} </span>分鐘
           </div>
           <div>
             <span className="text-3xl sm:text-5xl">{timeLeft.seconds} </span>秒
           </div>
         </div>
       ) : (
-        <p className="text-3xl">出去玩！</p>
+        <p className="w-full py-8 text-3xl">出去玩！</p>
       )}
       <footer className="mt-12 text-lg absolute bottom-0 py-3">
-        © {new Date().getFullYear()} 準備放假
+        © {new Date().getFullYear()} Tzu
       </footer>
     </div>
   );

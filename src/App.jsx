@@ -1,13 +1,14 @@
 import {
   Navigate,
   RouterProvider,
-  createBrowserRouter,
+  createHashRouter,
 } from "react-router-dom";
 /*------------------------------ Main ------------------------------ */
 import HomePage from "./pages/HomePage/HomePage";
 import TestPage from "./pages/TestPage/TestPage";
 import Chess from "./pages/Chess/Chess";
 import BuyorNot from "./pages/BuyorNot/BuyorNot";
+import RememberUs from "./pages/TestPage/RememberUs";
 /*------------------------------ Main ------------------------------ */
 import AppLayout from "./components/AppLayout/AppLayout";
 import AppLoginLayout from "./components/AppLoginLayout/AppLoginLayout";
@@ -50,6 +51,11 @@ function App() {
           path: "BuyorNot",
           element: <BuyorNot />,
         },
+        {
+          name: "記得想我們:)",
+          path: "RememberUs",
+          element: <RememberUs />,
+        },
         // ...routes,
       ],
     },
@@ -58,7 +64,7 @@ function App() {
       element: <Navigate to="/" />,
     },
   ];
-  const router = createBrowserRouter(routesForRouter);
+  const router = createHashRouter(routesForRouter);
   return <RouterProvider router={router}></RouterProvider>;
 }
 

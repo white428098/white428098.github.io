@@ -11,24 +11,70 @@ const initialBoard = [
   ["♖", "♘", "♗", "♕", "♔", "♗", "♘", "♖"],
 ];
 
+const isValidMove = (board, fromRow, fromCol, toRow, toCol) => {
+  const piece = board[fromRow][fromCol];
+  const target = board[toRow][toCol];
+  const rowDiff = Math.abs(toRow - fromRow);
+  const colDiff = Math.abs(toCol - fromCol);
+
+  // 檢查是否是同一方的棋子
+  if ((piece >= "♙" && piece <= "♔" && target >= "♙" && target <= "♔") ||
+    (piece >= "♟" && piece <= "♚" && target >= "♟" && target <= "♚")) {
+    return false;
+  }
+
+  switch (piece) {
+    case "♙": // 白兵
+      if (colDiff === 0 && toRow === fromRow - 1 && target === "") return true;
+      if (fromRow === 6 && colDiff === 0 && toRow === fromRow - 2 && target === "") return true;
+      if (rowDiff === 1 && colDiff === 1 && target !== "") return true;
+      break;
+    case "♟": // 黑兵
+      if (colDiff === 0 && toRow === fromRow + 1 && target === "") return true;
+      if (fromRow === 1 && colDiff === 0 && toRow === fromRow + 2 && target === "") return true;
+      if (rowDiff === 1 && colDiff === 1 && target !== "") return true;
+      break;
+    case "♘": case "♞": // 馬
+      if ((rowDiff === 2 && colDiff === 1) || (rowDiff === 1 && colDiff === 2)) return true;
+      break;
+    case "♖": case "♜": // 車
+      if (fromRow === toRow || fromCol === toCol) return true;
+      break;
+    case "♗": case "♝": // 象
+      if (rowDiff === colDiff) return true;
+      break;
+    case "♕": case "♛": // 后
+      if (fromRow === toRow || fromCol === toCol || rowDiff === colDiff) return true;
+      break;
+    case "♔": case "♚": // 王
+      if (rowDiff <= 1 && colDiff <= 1) return true;
+      break;
+    default:
+      return false;
+  }
+  return false;
+};
+
 const ChessBoard = () => {
   const [board, setBoard] = useState(initialBoard);
-  const [selected, setSelected] = useState(null); // 用於記錄選中的格子
+  const [selected, setSelected] = useState(null);
+  const [currentPlayer, setCurrentPlayer] = useState("white");
 
   const handleCellClick = (row, col) => {
     if (selected) {
-      // 如果已有選中的格子，嘗試移動棋子
-      const newBoard = board.map((r, i) =>
-        r.map((c, j) => {
-          if (i === selected.row && j === selected.col) return ""; // 清空原位置
-          if (i === row && j === col) return board[selected.row][selected.col]; // 將棋子移動到新位置
-          return c; // 保持其他格子不變
-        })
-      );
-      setBoard(newBoard);
-      setSelected(null); // 清除選中狀態
+      if (isValidMove(board, selected.row, selected.col, row, col)) {
+        const newBoard = board.map((r, i) =>
+          r.map((c, j) => {
+            if (i === selected.row && j === selected.col) return "";
+            if (i === row && j === col) return board[selected.row][selected.col];
+            return c;
+          })
+        );
+        setBoard(newBoard);
+        setCurrentPlayer(currentPlayer === "white" ? "black" : "white");
+      }
+      setSelected(null);
     } else if (board[row][col]) {
-      // 如果未選中格子，且當前格子有棋子，選中該格子
       setSelected({ row, col });
     }
   };
@@ -39,17 +85,12 @@ const ChessBoard = () => {
         {board.map((row, rowIndex) =>
           row.map((piece, colIndex) => {
             const isDark = (rowIndex + colIndex) % 2 === 1;
-            const isSelected =
-              selected &&
-              selected.row === rowIndex &&
-              selected.col === colIndex;
-
+            const isSelected = selected && selected.row === rowIndex && selected.col === colIndex;
             return (
               <div
                 key={`${rowIndex}-${colIndex}`}
                 onClick={() => handleCellClick(rowIndex, colIndex)}
-                className={`w-10 h-10 flex items-center justify-center text-xl cursor-pointer ${isDark ? "bg-gray-800 text-white" : "bg-gray-200"
-                  } ${isSelected ? "border-4 border-yellow-500" : ""}`}
+                className={`w-10 h-10 flex items-center justify-center text-xl cursor-pointer ${isDark ? "bg-gray-800 text-white" : "bg-gray-200"} ${isSelected ? "border-4 border-yellow-500" : ""}`}
               >
                 {piece}
               </div>
