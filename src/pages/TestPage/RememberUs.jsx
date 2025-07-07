@@ -17,6 +17,7 @@ import photo15 from "../../assets/images/20250125.webp";
 import photo16 from "../../assets/images/20250126.webp";
 import photo17 from "../../assets/images/20200618.webp";
 import photo18 from "../../assets/images/20190329.webp";
+import photo19 from "../../assets/images/20250301.webp";
 import background from "../../assets/images/background.webp";
 export default function RememberUs() {
   const imgList = [
@@ -91,6 +92,10 @@ export default function RememberUs() {
     {
       img: photo16,
       text: "2025-01-26 臺南",
+    },
+    {
+      img: photo19,
+      text: "2025-03-01 新竹",
     },
     {
       title: "一切順利",

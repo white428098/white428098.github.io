@@ -17,6 +17,16 @@ export default function HomePage() {
       img: "",
       link: "/test",
     },
+    {
+      text: "鷄排之旅",
+      img: "",
+      link: "/🐓",
+    },
+    {
+      text: "奇怪的東西",
+      img: "",
+      link: "/avatar",
+    },
   ];
 
   return (

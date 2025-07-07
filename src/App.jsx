@@ -9,6 +9,8 @@ import TestPage from "./pages/TestPage/TestPage";
 import Chess from "./pages/Chess/Chess";
 import BuyorNot from "./pages/BuyorNot/BuyorNot";
 import RememberUs from "./pages/TestPage/RememberUs";
+import Jipaiii from "./pages/Jipaiii/Jipaiii";
+import Avatar from "./pages/Avatar/Avatar";
 /*------------------------------ Main ------------------------------ */
 import AppLayout from "./components/AppLayout/AppLayout";
 import AppLoginLayout from "./components/AppLoginLayout/AppLoginLayout";
@@ -50,6 +52,16 @@ function App() {
           name: "買!!!",
           path: "BuyorNot",
           element: <BuyorNot />,
+        },
+        {
+          name: "🐓",
+          path: "🐓",
+          element: <Jipaiii />,
+        },
+        {
+          name: "avatar",
+          path: "avatar",
+          element: <Avatar />,
         },
         {
           name: "記得想我們:)",
